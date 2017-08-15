@@ -6,18 +6,47 @@ var app = express();
 app.use(morgan('combined'));
 
 
-var articleOne =  {
-    title: 'Article One | Naresh',
-    heading: 'Article One',
-    date: 'Aug 15, 2017',
-    content: `
-            <p>  This is the content for my first article in this module... This is the content for my first article in this module... This is the content for my first article in this module... This is the content for my first article in this module... This is the content for my first article in this module... This is the content for my first article in this module...
-            </p>
-            <p>  This is the content for my first article in this module... This is the content for my first article in this module... This is the content for my first article in this module... This is the content for my first article in this module... This is the content for my first article in this module... This is the content for my first article in this module...
-            </p>
-            <p>  This is the content for my first article in this module... This is the content for my first article in this module... This is the content for my first article in this module... This is the content for my first article in this module... This is the content for my first article in this module... This is the content for my first article in this module...
-            </p>`
+var articles = {
+    'article-one':  {
+        title: 'Article One | Naresh',
+        heading: 'Article One',
+        date: 'Aug 15, 2017',
+        content: `
+                <p>  This is the content for my first article in this module... This is the content for my first article in this module... This is the content for my first article in this module... This is the content for my first article in this module... This is the content for my first article in this module... This is the content for my first article in this module...
+                </p>
+                <p>  This is the content for my first article in this module... This is the content for my first article in this module... This is the content for my first article in this module... This is the content for my first article in this module... This is the content for my first article in this module... This is the content for my first article in this module...
+                </p>
+                <p>  This is the content for my first article in this module... This is the content for my first article in this module... This is the content for my first article in this module... This is the content for my first article in this module... This is the content for my first article in this module... This is the content for my first article in this module...
+                </p>`
+    },
+    
+    'article-two': {
+        title: 'Article Two | Naresh',
+        heading: 'Article Two',
+        date: 'Aug 15, 2017',
+        content: `
+                <p>  This is the content for my third article in this module... This is the content for my third article in this module... This is the content for my third article in this module... This is the content for my third article in this module... This is the content for my third article in this module... This is the content for my third article in this module...
+                </p>
+                <p>  This is the content for my third article in this module... This is the content for my third article in this module... This is the content for my third article in this module... This is the content for my third article in this module... This is the content for my third article in this module... This is the content for my third article in this module...
+                </p>
+                <p>  This is the content for my third article in this module... This is the content for my third article in this module... This is the content for my third article in this module... This is the content for my third article in this module... This is the content for my third article in this module... This is the content for my third article in this module...
+                </p>`
+    },
+    
+    'article-three': {
+        title: 'Article Three | Naresh',
+        heading: 'Article Three',
+        date: 'Aug 15, 2017',
+        content: `
+                <p>  This is the content for my second article in this module... This is the content for my second article in this module... This is the content for my second article in this module... This is the content for my second article in this module... This is the content for my second article in this module... This is the content for my second article in this module...
+                </p>
+                <p>  This is the content for my second article in this module... This is the content for my second article in this module... This is the content for my second article in this module... This is the content for my second article in this module... This is the content for my second article in this module... This is the content for my second article in this module...
+                </p>
+                <p>  This is the content for my second article in this module... This is the content for my second article in this module... This is the content for my second article in this module... This is the content for my second article in this module... This is the content for my second article in this module... This is the content for my second article in this module...
+                </p>`
+    }
 };
+    
 
 function createTemplate(data) {
     var title = data.title;
@@ -59,16 +88,11 @@ app.get('/', function (req, res) {
   res.sendFile(path.join(__dirname, 'ui', 'index.html'));
 });
 
-app.get('/article-one', function (req,res) {
-   res.send(createTemplate(articleOne));
-});
-
-app.get('/article-two', function (req,res) {
-   res.sendFile(path.join(__dirname, 'ui', 'article-two.html')); 
-});
-
-app.get('/article-three', function (req,res) {
-   res.sendFile(path.join(__dirname, 'ui', 'article-three.html'));
+app.get('/:articleName', function (req,res) {
+    //:articleName == article-one 
+    //articles[articleName] =={} sontent object for article-one
+    var articleName = req.param.articleName;
+   res.send(createTemplate(articles[articleName]));
 });
 
 app.get('/ui/style.css', function (req, res) {
